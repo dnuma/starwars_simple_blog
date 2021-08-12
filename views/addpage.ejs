@@ -1,0 +1,38 @@
+<!--     Student: David Numa, ID 8746372    -->
+<!--     Inspired by www.starwars.com       -->
+<!--     August 13, 2021                    -->
+
+<%- include('layouts/header'); -%>
+
+    <div class="line"></div>
+    <!-- Dividing line -->
+
+    <form class="page-form" method="post" enctype="multipart/form-data">
+        <p>
+            <label class="pageLbl" for="pageTitle">Title:</label>
+            <input type="text" name="pageTitle" id="pageTitle" required>
+        </p>
+        <p>
+            <label class="pageLbl" for="pageImage">Image:</label>
+            <input type="file" name="pageImage" id="pageImage" accept="image/png, image/jpeg" required>
+        </p>
+        <p>
+            <textarea class="addPageEditor" name="addPageEditor" id="addPageEditor" rows="10" cols="80"
+                required> </textarea>
+            <script>
+                // Replace the <textarea id="editor1"> with a CKEditor 4
+                // instance, using default configuration.
+                CKEDITOR.replace('addPageEditor');
+            </script>
+        </p>
+        <p>
+            <input class="submit-btn btn" type="submit" name="submit" id="submit"/>
+            <br>
+        </p>
+
+    </form>
+
+    <%- include('layouts/footer'); -%>
+
+    
+

@@ -1,0 +1,69 @@
+<%- include('layouts/header'); -%>
+
+    <body>
+        <%- include('layouts/nav'); -%>
+            <section>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Address</th>
+                            <th>City</th>
+                            <th>Province</th>
+                            <th>Colors</th>
+                            <th>Grayscales</th>
+                            <th>Scans</th>
+                            <th>Tax</th>
+                            <th>Total</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for(var order of orders){ %>
+                            <tr>
+                                <td>
+                                    <%= order.name %>
+                                </td>
+                                <td>
+                                    <%= order.email %>
+                                </td>
+                                <td>
+                                    <%= order.phone %>
+                                </td>
+                                <td>
+                                    <%= order.address %>
+                                </td>
+                                <td>
+                                    <%= order.city %>
+                                </td>
+                                <td>
+                                    <%= order.provinceText %>
+                                </td>
+                                <td>
+                                    $<%= order.item1.toFixed(2) %>
+                                </td>
+                                <td>
+                                    $<%= order.item2.toFixed(2) %>
+                                </td>
+                                <td>
+                                    $<%= order.item3.toFixed(2) %>
+                                </td>
+                                <td>
+                                    $<%= order.tax %>
+                                </td>
+                                <td>
+                                    $<%= order.total.toFixed(2) %>
+                                </td>
+                                <!-- NOTE: FOR FUTURE RELEASE
+                                <td><a href="/delete/<%= order._id%>">Delete</a></td>
+                                <td><a href="/edit/<%= order._id%>">Edit</a></td> -->
+                            </tr>
+                            <% } %>
+                    </tbody>
+                </table>
+            </section>
+    </body>
+    <%- include('layouts/footer'); -%>

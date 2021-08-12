@@ -1,0 +1,30 @@
+<!--     Student: David Numa, ID 8746372    -->
+<!--     Inspired by www.starwars.com       -->
+<!--     August 13, 2021                    -->
+
+<%- include('layouts/header'); -%>
+<!-- Article 1 start -->
+
+<div class="line"></div>
+<!-- Dividing line -->
+
+<article id="article1">
+    <!-- The new article tag. The id is supplied so it can be scrolled into view. -->
+    <h2><a href="#">Contact Us</a></h2>
+
+    <div class="line"></div>
+
+    <div class="articleBody clear">
+        <section>
+            <h2>Thank you for contacting us <%= name %>!</h2>
+            <h3>Check your email <%= email %> periodically for updates.</h3>
+            <figure class="figure-thanks">
+                <!-- The figure tag marks data (usually an image) that is part of the article -->
+                <img class="figure-thanks" src="../images/contactthanks.gif" itle="Thank you" alt="Thank you" />
+            </figure>
+        </section>
+    </div>
+</article>
+
+<!-- Article 1 end -->
+<%- include('layouts/footer'); -%>

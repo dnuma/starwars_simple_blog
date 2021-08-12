@@ -1,0 +1,30 @@
+{
+  "name": "finalproject",
+  "version": "1.0.0",
+  "description": "Web Design Final Project",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "*",
+    "ckeditor4": "^4.16.1",
+    "connect-flash": "*",
+    "ejs": "*",
+    "express": "*",
+    "express-messages": "*",
+    "express-session": "*",
+    "express-validator": "*",
+    "formidable": "^1.2.2",
+    "jquery": "*",
+    "mongoose": "*",
+    "nodemon": "^2.0.12"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "awesome"
+  ],
+  "author": "David Numa",
+  "license": "ISC"
+}

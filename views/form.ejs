@@ -1,0 +1,206 @@
+<!-- Form.ejs is the main page of the project-->
+
+<%- include('layouts/header'); -%>
+  <body>
+    <%- include('layouts/nav'); -%>
+    <!-- form starts -->
+      <section class="w50">
+        <form name="myform" method="Post" onsubmit="return formSubmit();" action="">
+          <!--Labels and inputs-->
+          <label>Name</label>
+          <input id="name" placeholder="First Last" name="name" /><br />
+
+          <label>Phone</label>
+          <input id="phone" placeholder="123-123-1234" name="phone" /><br />
+
+          <label>Email</label>
+          <input id="email" placeholder="email@domain.com" name="email" /><br />
+
+          <label>Address</label>
+          <input id="address" placeholder="123 yemen street" name="address" /><br />
+
+          <label>City</label>
+          <input id="city" placeholder="Yemen" name="city" /><br />
+
+          <label>Province</label>
+          <select name="province" id="province">
+            <option value="">----- Select -----</option>
+            <option value="1">Alberta</option>
+            <option value="2">British Columbia</option>
+            <option value="3">Manitoba</option>
+            <option value="4">New Brunswick</option>
+            <option value="5">Newfoundland & Labrador</option>
+            <option value="6">Northwest Territories</option>
+            <option value="7">Nova Scotia</option>
+            <option value="8">Nunavut</option>
+            <option value="9">Ontario</option>
+            <option value="10">Prince Edward Island</option>
+            <option value="11">Quebec</option>
+            <option value="12">Saskatchewan</option>
+            <option value="13">Yukon</option>
+          </select><br/>
+
+          <h3>Which products do you want to buy?</h3>
+          <div>
+            <label for="colorprint">1. Color prints ($0.50/ print)</label>
+            <input type="checkbox" value="colorprint" id="colorprint" name="colorprint" />
+            <input id="item1" placeholder="Enter qty" name="item1" value="0" hidden />
+            <!--The script will display/hide the input text for item quantity-->
+            <script>
+              $(document).ready(function () {
+                $("#colorprint").click(function () {
+                  if ($("input[id=colorprint]").prop("checked")) {
+                    $("input[id=item1]").show();
+                  } else {
+                    $("input[id=item1]").hide();
+                  }
+                });
+              });
+            </script>
+          </div>
+
+          <div>
+            <label for="grayscale">2. Grayscale prints ($0.20/ print)</label>
+            <input type="checkbox" value="grayscale" id="grayscale" name="grayscale" />
+            <input id="item2" placeholder="Enter qty" name="item2" value="0" hidden />
+            <!--The script will display/hide the input text for item quantity-->
+            <script>
+              $(document).ready(function () {
+                $("#grayscale").click(function () {
+                  if ($("input[id=grayscale]").prop("checked")) {
+                    $("input[id=item2]").show();
+                  } else {
+                    $("input[id=item2]").hide();
+                  }
+                });
+              });
+            </script>
+          </div>
+
+          <div>
+            <label for="scan">3. Scanning ($0.25/ scan)</label>
+            <input type="checkbox" value="scan" id="scan" name="scan" />
+            <input id="item3" placeholder="Enter qty" name="item3" value="0" hidden />
+            <!--The script will display/hide the input text for item quantity-->
+            <script>
+              $(document).ready(function () {
+                $("#scan").click(function () {
+                  if ($("input[id=scan]").prop("checked")) {
+                    $("input[id=item3]").show();
+                  } else {
+                    $("input[id=item3]").hide();
+                  }
+                });
+              });
+            </script>
+          </div>
+
+          <input type="submit" value="Submit" />
+        </form>
+      </section>
+      <!-- Form results-->
+      <section class="w50">
+        <div class="formData">
+          <!--If there's errors, display them-->
+          <% if(typeof(errors) !='undefined' ){ for(var error of errors){ %>
+            <p class="errors">
+              <%= error.msg%>
+            </p>
+            <% } } if(typeof(total) !='undefined' ){ %>
+              <!--If there's no error, display the receipt-->
+              <p id="formResult">Your Receipt:</p>
+              <table>
+                <tr>
+                  <th>Name:</th>
+                  <td>
+                    <%= name %>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Phone:</th>
+                  <td>
+                    <%= phone %>
+                  </td>
+                </tr>
+                <tr>
+                <tr>
+                  <th>Email:</th>
+                  <td>
+                    <%= email %>
+                  </td>
+                </tr>
+                <th>Address:</th>
+                <td>
+                  <%= address %>
+                </td>
+                </tr>
+                <tr>
+                  <th>City:</th>
+                  <td>
+                    <%= city %>
+                  </td>
+                </tr>
+                <tr>
+                <tr>
+                  <th>Province:</th>
+                  <td>
+                    <%= provinceText %>
+                  </td>
+                </tr>
+                <tr>
+                  <!--If the checkbox is checked, display the item-->
+                <% if(colorprint ){ %>  
+                <tr>
+                  <th>Color Prints:</th>
+                  <td>
+                    $<%= item1.toFixed(2) %>
+                  </td>
+                </tr>
+                <% } %>
+                 <!--If the checkbox is checked, display the item-->
+                <% if(grayscale){ %>  
+                <tr>
+                  <th>Grayscale Prints:</th>
+                  <td>
+                    $<%= item2.toFixed(2) %>
+                  </td>
+                </tr>
+                <% } %>
+                 <!--If the checkbox is checked, display the item-->
+                <% if(scan){ %>
+                <tr>
+                  <tr>
+                  <th>Scans:</th>
+                  <td>
+                    $<%= item3.toFixed(2) %>
+                  </td>
+                </tr>
+                <% } %>
+                <tr>
+                  <th>Subtotal:</th>
+                  <td>
+                    $<%= subTotal.toFixed(2) %>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Tax:</th>
+                  <td>
+                    %<%= tax.toFixed(2) * 100 %>
+                  </td>
+                  <td>
+                    $<%= taxTotal.toFixed(2) %>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Total:</th>
+                  <td>
+                    $<%= total.toFixed(2) %>
+                  </td>
+                </tr>
+              </table>
+              <% } %>
+        </div>
+      </section>
+      <div class="clear"></div>
+  </body>
+  <%- include('layouts/footer'); -%>
