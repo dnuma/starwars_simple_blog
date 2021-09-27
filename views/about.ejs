@@ -1,0 +1,54 @@
+<!--     Student: David Numa, ID 8746372    -->
+<!--     Inspired by www.starwars.com       -->
+<!--     August 13, 2021                    -->
+
+<%- include('layouts/header' , { posts: posts }); -%>
+
+    <!-- Article 1 start -->
+
+    <div class="line"></div>
+    <!-- Dividing line -->
+
+    <article id="article1">
+        <!-- The new article tag. The id is supplied so it can be scrolled into view. -->
+        <h2><a href="#">About Me</a></h2>
+
+        <div class="line"></div>
+
+        <div class="articleBody clear">
+            <section id="about">
+                <p>
+                    I started coding by modifying the mIRC chat style back in the late 90's. I really liked what I found
+                    and what I could do with a few simple lines of code. That was the beginning of my passion for code.
+                </p>
+                <p>
+                    Time passed and I started my life as a gamer, I competed in many tournaments in Colombia and went
+                    to countless LAN Parties. The code was being put aside little by little.
+                </p>
+                <p>
+                    Then it was time to chose a BAC. I started Electronic Engineering and I decided to
+                    focus my professional career on something completely different than computing. I worked for 15 years
+                    in
+                    construction, in maintenance, in clinics but I always felt incomplete, nothing gave me a real
+                    challenge or really passionate me.
+                </p>
+                <p>
+                    Today, 23+ years after my first mIRC script modification, I started programming again ...
+                    and I was never happier.
+                </p>
+                Father of 2, husband of 1, fan of Star Wars and all related to it and future programmer, that's me.
+                </p>
+                <figure class="figure-about">
+                    <!-- The figure tag marks data (usually an image) that is part of the article -->
+                    <img src="images/moi.jpg" width="400" title="David Numa" alt="David Numa" />
+                </figure>
+                <blockquote>
+                    “I can't believe you're watching Star Wars again”
+                </blockquote>
+                <p>-- My wife</p>
+            </section>
+        </div>
+    </article>
+
+    <!-- Article 1 end -->
+    <%- include('layouts/footer'); -%>

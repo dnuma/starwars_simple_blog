@@ -1,0 +1,40 @@
+<!--     Student: David Numa, ID 8746372    -->
+<!--     Inspired by www.starwars.com       -->
+<!--     August 13, 2021                    -->
+
+<%- include('layouts/header' , { posts: posts }); -%>
+
+    <div class="line"></div>
+    <!-- Dividing line -->
+    <br>
+    <h2 style="font-weight: bold;">Edit page</h2>
+
+    <form class="page-form" method="post" action="/editpage/<%= postsid %>" enctype="multipart/form-data">
+        <p>
+            <label class="pageLbl" for="pageTitle">Page Title:</label>
+            <input type="text" name="pageTitle" id="pageTitle" value="<%= posts.pageTitle %>" required>
+        </p>
+        <p>
+            <label class="pageLbl" for="pageImageTitle">Image Title:</label>
+            <input type="text" name="pageImageTitle" id="pageImageTitle" value="<%= posts.pageImageTitle %>" required>
+            <input type="file" name="pageImage" id="pageImage" accept="image/png, image/jpeg" value="" required>
+            <label class="pageLbl">Image:&nbsp;<a style="color:#E3B202;" href="/uploads/<%= posts.pageImage %>">
+                    <%= posts.pageImage %>
+                </a></label>
+        </p>
+        <p>
+            <textarea class="pageEditor" name="pageEditor" id="pageEditor" rows="10" cols="80"
+                required> <%- posts.pageText %></textarea>
+            <script>
+                // Replace the <textarea id="editor1"> with a CKEditor 4 instance, using default configuration.
+                CKEDITOR.replace('pageEditor');
+            </script>
+        </p>
+        <p>
+            <input class="submit-btn btn" type="submit" name="submit" id="submit" />
+            <br>
+        </p>
+    </form>
+
+
+    <%- include('layouts/footer'); -%>

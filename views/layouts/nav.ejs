@@ -1,0 +1,27 @@
+<!--     Student: David Numa, ID 8746372    -->
+<!--     Inspired by www.starwars.com       -->
+<!--     August 13, 2021                    -->
+
+<nav class="clear" id="nav_menu">
+  <ul>
+    <li class="home"><a href="/">Home</a></li>
+    <% if(typeof(userLoggedIn) !='undefined' && userLoggedIn){%>
+      <li class="jedi"><a href="/addpage">Add Page</a></li>
+      <li class="sith"><a href="/allpages">Edit Pages</a></li>
+      <li class="login"><a href="/logout">Log Out </a></li>
+      <%}else{%>
+        <li><a href="#">Pages</a>
+          <ul>
+            <% if(typeof(posts) !='undefined' ) { for (var post of posts) { %>
+              <li class="<%= post.pageTitle %>"><a href="/<%= post.pageTitle %>">
+                  <%= post.pageTitle %>
+                </a></li>
+              <% }}; %>
+          </ul>
+        </li>
+        <li class="about"><a href="/about">About me</a></li>
+        <li class="contact"><a href="/contact">Contact Me</a></li>
+        <li class="login"><a href="/login">Log In</a></li>
+        <%}%>
+  </ul>
+</nav>

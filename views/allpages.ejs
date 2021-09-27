@@ -1,0 +1,44 @@
+<!--     Student: David Numa, ID 8746372    -->
+<!--     Inspired by www.starwars.com       -->
+<!--     August 13, 2021                    -->
+
+<%- include('layouts/header' , { posts: posts }); -%>
+
+    <div class="line"></div>
+    <!-- Dividing line -->
+
+    <section class="editPage"></section>
+    <br>
+    <h2 style="font-weight: bold;">Edit a page</h2>
+    <table>
+        <thead>
+            <tr>
+                <th class="textTitle">Title</th>
+                <th class="textImage">Image</th>
+                <th class="textTable">Text</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(var post of posts){ %>
+                <tr>
+                    <td>
+                        <%= post.pageTitle %>
+                    </td>
+                    <td>
+                        <%= post.pageImageTitle %>
+                    </td>
+                    <td>
+                        <%- post.pageText %>
+                    </td>
+                    <td><a href="/editpage/<%= post._id%>">Edit</a></td>
+                    <td><a href="/deletepage/<%= post._id%>">Delete</a></td>
+
+                </tr>
+                <% } %>
+        </tbody>
+    </table>
+    </section>
+
+    <%- include('layouts/footer'); -%>

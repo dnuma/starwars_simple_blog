@@ -1,0 +1,36 @@
+<!--     Student: David Numa, ID 8746372    -->
+<!--     Inspired by www.starwars.com       -->
+<!--     August 13, 2021                    -->
+
+<%- include('layouts/header'); -%>
+    <!-- Articles start -->
+
+    <div class="line"></div>
+    <!-- Dividing line -->
+    <% for (var post of posts) { %>
+        <article id="article1">
+            <!-- The new article tag. The id is supplied so it can be scrolled into view. -->
+            <h2>
+                <a href="/<%= post.pageTitle %>">
+                    <%= post.pageTitle %>
+                </a>
+                <a class="go_up" href="#"><img src="/images/up.png" width="40" title="Go Up" alt="Up"></a>
+            </h2>
+
+            <div class="line"></div>
+
+            <div class="articleBody clear">
+
+                <figure class="figure_home">
+                    <!-- The figure tag marks data (usually an image) that is part of the article -->
+                    <a href="/<%= post.pageTitle %>"><img src="/uploads/<%= post.pageImage %>" width="900"
+                            title="<%= post.pageImageTitle %>" alt="<%= post.pageTitle %>" /></a>
+                </figure>
+                <%- post.pageText %>
+
+            </div>
+        </article>
+        <% }; %>
+            <!-- Articles end -->
+
+            <%- include('layouts/footer'); -%>

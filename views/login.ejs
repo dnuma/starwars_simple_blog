@@ -1,0 +1,45 @@
+<!--     Student: David Numa, ID 8746372    -->
+<!--     Inspired by www.starwars.com       -->
+<!--     August 13, 2021                    -->
+
+<%- include('layouts/header' , { posts: posts }); -%>
+
+    <div class="line"></div>
+    <!-- Dividing line -->
+
+    <article id="article1">
+        <h2><a href="#">Login</a></h2>
+
+        <div class="line"></div>
+
+        <div class="articleBody clear">
+            <aside id="sidebar_2col">
+                <figure class="figure-login">
+                    <!-- The figure tag marks data (usually an image) that is part of the article -->
+                    <img class="figure-login" src="../images/login.png" height="300" title="Login" alt="Login" />
+                </figure>
+            </aside>
+            <section id="main_2col">
+                <form name="loginForm" id="loginForm" method="Post" action="">
+                    <p><label class="lbl" for="username">Username:</label>
+                        <input type="text" name="username" id="username" required autofocus>
+                    </p>
+                    <p><label class="lbl" for="password">Password:</label>
+                        <input type="password" name="password" id="password" required>
+                    </p>
+                    <p>
+                        <input class="submit-btn btn" type="submit" value="Login">
+                    </p>
+                    <p id="errors">
+                        <% if(typeof error !=='undefined' ){ %>
+                            <%- error%>
+                                <% } %>
+                    </p>
+                </form>
+            </section>
+        </div>
+    </article>
+
+    </section>
+    </body>
+    <%- include('layouts/footer'); -%>

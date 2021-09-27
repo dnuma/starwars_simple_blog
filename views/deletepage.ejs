@@ -1,0 +1,26 @@
+<!--     Student: David Numa, ID 8746372    -->
+<!--     Inspired by www.starwars.com       -->
+<!--     August 13, 2021                    -->
+
+<%- include('layouts/header' , { posts: posts }); -%>
+
+    <!-- Article 1 start -->
+
+    <div class="line"></div>
+    <!-- Dividing line -->
+
+    <article id="article1">
+        <!-- The new article tag. The id is supplied so it can be scrolled into view. -->
+        <h2><a href="#">DELETE PAGE</a></h2>
+
+        <div class="line"></div>
+
+        <div class="articleBody clear">
+            <section id="about">
+                <%= message %>
+            </section>
+        </div>
+    </article>
+
+    <!-- Article 1 end -->
+    <%- include('layouts/footer'); -%>

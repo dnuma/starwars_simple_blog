@@ -1,0 +1,31 @@
+<!--     Student: David Numa, ID 8746372    -->
+<!--     Inspired by www.starwars.com       -->
+<!--     August 13, 2021                    -->
+
+<%- include('layouts/header' , { posts: posts }); -%>
+
+    <!-- Article 1 start -->
+
+    <div class="line"></div>
+    <!-- Dividing line -->
+
+    <article id="article1">
+        <!-- The new article tag. The id is supplied so it can be scrolled into view. -->
+        <h2><a href="#">Under Construction</a></h2>
+
+        <div class="line"></div>
+
+        <div class="articleBody clear">
+            <figure class="figure_maintenance">
+                <!-- The figure tag marks data (usually an image) that is part of the article -->
+                <img src="images/maintenance.jpg" width="900" title="Under Construction" alt="Maintenance" />
+            </figure>
+            <p>
+                This page is under construction.
+            </p>
+            <blockquote>“Rebellions are built on hope”</blockquote>
+            <p>-- Jyn Erso</p>
+        </div>
+    </article>
+    <!-- Article 1 end -->
+    <%- include('layouts/footer'); -%>

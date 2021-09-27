@@ -1,0 +1,36 @@
+<%- include('layouts/header'); -%>
+    <Body>
+        <%- include('layouts/nav'); -%>
+            <form method="POST" action="/contact">
+                <div class="formfield">
+                    <label for="name">Full Name: </label>
+                    <input type="text" name="name">
+                    <div class="clear"></div>
+                </div>
+                <div class="formfield">
+                    <label for="email">Email: </label>
+                    <input type="text" name="email">
+                    <div class="clear"></div>
+                </div>
+                <div class="formfield">
+                    <label for="phone">PhoneNumber: </label>
+                    <input name="phone">
+                    <div class="clear"></div>
+                </div>
+                <div class="formfield">
+                    <label for="comment">Comments: </label>
+                    <textarea id="comment" name="comment" placeholder="Please specify everything you need."></textarea>
+                    <div class="clear"></div>
+                </div>
+                <div class="formfield">
+                    <input class="submit" type="submit" value="Submit">
+                </div>
+            </form>
+</Body>
+<% if(typeof errors !=='undefined' ){ for(var error of errors){ %>
+    <h3>
+        <%= error.msg %>
+    </h3>
+    <% } } %>
+
+    <%- include('layouts/footer'); -%>

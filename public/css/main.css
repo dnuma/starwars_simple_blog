@@ -1,0 +1,514 @@
+/* Student: David Numa
+Inspired by www.starwars.com  */
+
+*{
+	/* Universal reset: */
+	margin:0;
+	padding:0;
+}
+
+header,footer,
+article,section,
+hgroup,nav,
+figure, form{
+	/* Giving a display value to the HTML5 rendered elements: */
+	display:block;
+}
+
+body{
+	/* Setting the default text color, size, page background and a font stack: */
+	font-size:0.825em;
+	color:#fcfcfc;
+	background-color:#151515;
+	font-family:Arial, Helvetica, sans-serif;
+	background-image: url(../images/bgleft.jpg), url(../images/bgright.jpg);
+	background-repeat:repeat-y, repeat-y;
+	background-position: left, right;
+}
+
+
+/* Hyperlink and scrolling styles: */
+
+a, a:visited {
+	
+	text-decoration:none;
+	outline:none;
+}
+
+article a{
+	text-decoration:underline;
+	font-style:italic;
+}
+
+a img{
+	border:none;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Headings: */
+
+.main-logo {
+	margin-top: 10px;
+}
+
+h1,h2,h3{
+	text-shadow:0 1px 1px black;
+}
+
+h1{
+	/* The logo text */
+	font-family: arial;
+	font-size: 2em;
+	text-shadow: 1px 1px 1px #aaa;
+	padding:0.5em;
+	float: right;
+}
+
+h3{
+	/* The slogan text */
+	color: #b9b9b9;
+	font-family: arial;
+	font-size:1.5em;
+	font-style: italic;
+	font-weight:normal;
+	margin:0.5em 0 1em;
+}
+
+h2{
+	color: #b9b9b9;
+	font-size:2.2em;
+	font-weight:normal;
+	letter-spacing:0.01em;
+	text-transform:uppercase;
+}
+
+.go_up {
+	float: right; 
+	padding-right: 15px;  
+}
+
+p{
+	line-height:1.5em;
+	padding-bottom:1em;
+}
+
+blockquote {
+	font-style: italic;
+}
+
+.pbold{
+	font-size:1.2em;
+	font-weight:bold;
+	letter-spacing:0.01em;
+	text-transform:uppercase;
+}
+
+.line{
+	/* The dividing line: */
+	height:1px;
+	background-color:#b9b9b9;
+	border-bottom:1px solid #E3B202;
+	margin:1em 0;
+	overflow:hidden;
+}
+
+article .line{
+	/* The dividing line inside of the article is darker: */
+	background-color:#3273C5;
+	border-bottom-color:#15242a;  
+}
+
+footer .line{
+	margin:2em 0;
+}
+
+nav{
+	padding:0 5px;
+	position:absolute;
+	right:0;
+	top:5em;
+	
+	border-bottom:1px solid #b9b9b9;
+
+	/*
+	-moz-box-shadow:0 1px 1px #333333;
+	-webkit-box-shadow:0 1px 1px #333333;
+	box-shadow:0 1px 1px #333333;
+	*/
+}
+
+nav sup {
+	color: red;
+}
+
+/* The clearfix hack to clear the floats: */
+
+.clear:after{
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+
+/* The navigation styling: */
+
+nav ul li{
+	display:inline;
+	background-color: #151515;
+	color: white;
+	list-style: none;
+}
+
+nav ul li a,
+nav ul li a:visited{
+	color:#b9b9b9;
+	display:block;
+	float:left;
+	font-size:1.25em;
+	font-weight:bold;
+	margin:5px 2px;
+	padding:7px 10px 4px;
+	text-transform:uppercase;
+}
+
+nav ul li a:hover{
+	text-decoration:none;
+}
+
+nav>ul::after {
+	content: "";
+	clear: both;
+	display: block;
+}
+
+#nav_menu ul li {
+	float: left;
+}
+
+#nav_menu ul ul {
+	display: none;
+	position: absolute;
+	top: 100%;
+}
+
+#nav_menu ul li:hover>ul {
+	display: block;
+}
+
+
+
+/* Each LI color represents a light saber */
+.home a:hover {
+	background-image: linear-gradient(to bottom,transparent 80%,white);
+}
+.jedi a:hover { 
+	background-image: linear-gradient(to bottom,transparent 80%,blue);
+}
+.sith a:hover {
+	background-image: linear-gradient(to bottom,transparent 80%,red);
+}
+.about a:hover {
+	background-image: linear-gradient(to bottom,transparent 80%,green);
+}
+li a:hover {
+	background-image: linear-gradient(to bottom,transparent 80%,purple);
+}
+.contact a:hover {
+	background-image: linear-gradient(to bottom,transparent 80%,yellow);
+}
+.login a:hover {
+	background-image: linear-gradient(to bottom,transparent 80%,orange	);
+}
+
+/* Applying CSS3 rounded corners:
+nav, article, nav ul li a,figure{
+	
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+	border-radius:10px;
+}
+ */
+
+/* Article styles: */
+
+#page{
+	width:960px;
+	margin:0 auto;
+	position:relative;
+}
+/***********************************************************************************/
+article{
+	background-color:#2A2A2A;
+	margin:3em 0;
+	padding:20px;
+	font-size: medium;
+}
+
+article a {
+	color: white;
+	transition: color 200ms;
+}
+
+article a:hover {
+	color: #3273C5;
+}
+
+article figure{
+	border-bottom: 2px solid #3273C5;
+	float:center;
+	margin: auto auto 1em auto;
+	overflow:hidden;
+	align-content: center;	
+}
+
+article figure.figure_home{
+	height:300px;
+	width: 900px;
+ }
+
+ article figure.figure_maintenance{
+	height:677px;
+	width: 900px;
+ }
+  article figure.figure_404{
+	height:604px;
+	width: 900px;
+ }
+
+  article figure.figure-contact {
+	width: 300px;
+	margin-top: 10%;
+  }
+
+	article figure.figure-thanks,
+	figure.figure-about {
+		padding-left: 25%;
+		padding-bottom: 2em;
+	}
+
+  article figure.figure-login{
+	width: 300px;
+ }
+
+ 
+#sidebar_2col {
+	clear: both;
+	margin-top: 1em;
+	width: 300px;
+	float: left;
+	position: relative;
+	align-items: center;
+}
+
+#main_2col {
+	width: 600px;
+	float: right;
+}
+
+#sidebar1_3col {
+	margin-top: 1em;
+	width: 300px;
+	float: left;
+}
+
+#main_3col {
+	width: 400px;
+	float: left;
+	margin-left: 1em;
+}
+
+#sidebar2_3col {
+	margin-top: 1em;
+	width: 200px;
+	float: right;
+}
+
+
+
+article img:hover{
+	transform: scale(110%);
+	/*
+	-moz-box-shadow:0 0 2px #4D7788;
+	-webkit-box-shadow:0 0 2px #4D7788;
+	box-shadow:0 0 2px #4D7788; */
+}
+
+article img {	
+	transition: all 200ms;
+}
+
+/* Form styling: */
+
+form .lbl {
+	width:20%;
+	display:inline-block;
+	margin-bottom:25px;
+}
+
+form select {
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+}
+
+form input{
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	margin-right: 1em;
+	margin-bottom: 0.5em;
+	padding:4px 5px;
+}	
+
+form input:focus {
+	border: 3px solid #E3B202 !important;
+}
+
+fieldset {
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+}
+
+.btn {
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	border: 0px;
+	background-color: #b4900d;
+	text-transform:uppercase;
+	font-size: 15px;
+	width: 150px;
+	height: 40px;
+	color: black;
+	transition: all 300ms;
+	float: right;
+}
+
+.btn:hover {
+	background-color: #E3B202;
+}
+
+form select, input[type=text], input[type=password], input[type=email]  {
+	width: 250px;
+	height: 28px;
+	color: black;
+	box-sizing:border-box;
+}
+
+form td {
+	width: 450px;
+}
+
+form textarea {
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	height: 5em;
+	width: 36em;
+	color:black;
+	padding: 5px 10px;
+}
+
+#loginForm {
+	margin: 15% 0;
+}
+/**********************************************************************************************/
+.page-form {
+		background-color:#2A2A2A;
+		margin:1.5em 0;
+		padding:20px;
+		font-size: medium;
+		text-shadow:0 2px 0 black;
+}
+
+.pageLbl {
+	width:10%;
+	display: inline-block;
+	font-size: medium;
+}
+
+#pageTitle {
+	width:80%;
+}
+
+
+/*
+	Table Styling
+*/
+
+table {
+	margin:1.5em 0;
+	border: 2px solid white;
+	border-collapse: collapse;
+	color: white;
+}
+
+td {
+	background-color: white;
+	border: 2px solid #2A2A2A;
+	padding: 12px 15px;
+	color: #2A2A2A;
+}
+
+th {
+	border: 2px solid white;
+	padding: 12px 15px;
+	font-weight: bold;
+	background-color: #2A2A2A;
+	color: #E3B202;
+	font-size: 16px;
+}
+
+.textTable{
+	width: 400px;
+}
+.textTitle {
+	width: 200px;
+}
+.textImage {
+	width: 100px;
+}
+
+/* Footer styling: 
+
+	clear: both;*/
+
+footer{
+	margin-bottom:30px;
+	text-align:center;;
+}
+
+
+footer p{
+	position:relative;
+}
+
+footer a,footer a:visited{
+	color:#b9b9b9;
+	background-color:#2A2A2A;
+	display:block;
+	padding:4px 4px;
+	z-index:100;
+	position:relative;
+	transition: all 200ms;
+}
+
+footer a:hover{
+	text-decoration:none;
+	background-color:#0f50a0;
+	
+}
+
+footer a.by{
+	float:left;
+
+}
+
+footer a.up{
+	float:right;
+}
