@@ -1,4 +1,4 @@
-// Student: David Numa, ID 8746372
+// Student: David Numa
 // Inspired by www.starwars.com
 // August 13, 2021
 
