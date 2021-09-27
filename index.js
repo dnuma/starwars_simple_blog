@@ -1,3 +1,11 @@
+// Student: David Numa, ID 8746372
+// Inspired by www.starwars.com
+// August 13, 2021
+
+// MongoDB Structure:
+// DB: starwars
+// Collections: contacts, posts, users
+
 /****************************Dependencies****************************/
 //#region
 // import dependencies you will use
@@ -11,7 +19,6 @@ const { check, validationResult, header } = require('express-validator');
 const { json } = require('body-parser');
 //get express session
 const session = require('express-session');
-const { Console } = require('console');
 //for uploading the images to the pages
 const formidable = require("formidable");
 
@@ -47,25 +54,18 @@ const Contact = mongoose.model('contacts', {
     comment: String
 });
 
-// set up the model for the order
-const Order = mongoose.model('posts', {
-    name: String,
-    email: String,
-    phone: String,
-    address: String,
-    city: String,
-    provinceText: String,
-    item1: Number,
-    item2: Number,
-    item3: Number,
-    tax: Number,
-    total: Number
+const Post = mongoose.model('posts', {
+    pageTitle: String,
+    pageImageTitle: String,
+    pageImage: String,
+    pageText: String
 });
 //#endregion
 
 /****************************Variables******************************/
 //#region Variables
 var myApp = express();
+
 myApp.use(express.urlencoded({ extended: false }));
 // Setup session to work with app
 // secret is a random string to use for the the hashes to save session cookies.
@@ -89,23 +89,34 @@ myApp.set('view engine', 'ejs');
 //#endregion
 
 /****************************Page Routes****************************/
-// Home page
+//#region Home page
 myApp.get('/', function (req, res) {
-    res.render('home', { userLoggedIn: req.session.userLoggedIn }); // no need to add .ejs to the file name
+
+    Post.find({}).exec(function (err, posts) {
+        res.render('home', { posts: posts, userLoggedIn: req.session.userLoggedIn }); // no need to add .ejs to the file name
+    });
+
 });
+//#endregion
 
 //#region Static pages: Jedi, Sith, About me
 // Jedi page
 myApp.get('/jedi', function (req, res) {
-    res.render('jedi', { userLoggedIn: req.session.userLoggedIn });
+    Post.find({}).exec(function (err, posts) {
+        res.render('jedi', { posts: posts, userLoggedIn: req.session.userLoggedIn });
+    });
 });
 // Sith page
 myApp.get('/sith', function (req, res) {
-    res.render('sith', { userLoggedIn: req.session.userLoggedIn });
+    Post.find({}).exec(function (err, posts) {
+        res.render('sith', { posts: posts, userLoggedIn: req.session.userLoggedIn });
+    });
 });
 // About Me
 myApp.get('/about', function (req, res) {
-    res.render('about', { userLoggedIn: req.session.userLoggedIn });
+    Post.find({}).exec(function (err, posts) {
+        res.render('about', { posts: posts, userLoggedIn: req.session.userLoggedIn });
+    });
 });
 
 //#endregion
@@ -113,7 +124,9 @@ myApp.get('/about', function (req, res) {
 //#region Internal use pages: Construction
 // Under constructions
 myApp.get('/construction', function (req, res) {
-    res.render('construction', { userLoggedIn: req.session.userLoggedIn });
+    Post.find({}).exec(function (err, posts) {
+        res.render('construction', { posts: posts, userLoggedIn: req.session.userLoggedIn });
+    });
 });
 
 //#endregion
@@ -121,76 +134,97 @@ myApp.get('/construction', function (req, res) {
 //#region Forms: contact, login, logout
 // Contact page
 myApp.get('/contact', function (req, res) {
-    res.render('contact', { userLoggedIn: req.session.userLoggedIn });
+    Post.find({}).exec(function (err, posts) {
+        res.render('contact', {
+            posts: posts,
+            userLoggedIn: req.session.userLoggedIn,
+            name: '',
+            email: '',
+            contactsaved: false
+        });
+    });
 });
 
 myApp.post('/contact', [
     check('phone', '').custom(CustomPhoneValidation),
 ],
     function (req, res) {
-        const errors = validationResult(req);
-        console.log(req.body);
-        if (!errors.isEmpty()) {
-            res.render('contact', {
-                errors: errors.array()
-            });
-        }
-        else {
-            // Save data from the EJS
-            var name = req.body.name;
-            var address = req.body.address;
-            var phone = req.body.phone;
-            var email = req.body.email;
-            var comment = req.body.comment;
-            var force = req.body.force;
+        Post.find({}).exec(function (err, posts) {
+            var contactsaved;
+            const errors = validationResult(req);
+            //console.log(req.body);
+            if (!errors.isEmpty()) {
+                res.render('contact', {
+                    posts: posts,
+                    contactsaved: contactsaved,
+                    errors: errors.array()
+                });
+            }
+            else {
+                // Save data from the EJS
+                var name = req.body.name;
+                var address = req.body.address;
+                var phone = req.body.phone;
+                var email = req.body.email;
+                var comment = req.body.comment;
+                var force = req.body.force;
 
-            // Validate if the user selected any race
-            if (req.body.human) {
-                var human = true;
-            } else {
-                var human = false;
-            }
-            if (req.body.wookie) {
-                var wookie = true;
-            } else {
-                var wookie = false;
-            }
-            if (req.body.hutt) {
-                var hutt = true;
-            } else {
-                var hutt = false;
-            }
-
-            // Save the data in the mongoDB
-            var myNewContact = new Contact(
-                {
-                    name: name,
-                    address: address,
-                    phone: phone,
-                    email: email,
-                    force: force,
-                    human: human,
-                    wookie: wookie,
-                    hutt: hutt,
-                    comment: comment
+                // Validate if the user selected any race
+                if (req.body.human) {
+                    var human = true;
+                } else {
+                    var human = false;
                 }
-            )
-            myNewContact.save().then(() => console.log('New contact saved'));
+                if (req.body.wookie) {
+                    var wookie = true;
+                } else {
+                    var wookie = false;
+                }
+                if (req.body.hutt) {
+                    var hutt = true;
+                } else {
+                    var hutt = false;
+                }
 
-            res.render('contactthanks', {
-                name: name,
-                email: email
-            });
-        }
+                // Save the data in the mongoDB
+                var myNewContact = new Contact(
+                    {
+                        name: name,
+                        address: address,
+                        phone: phone,
+                        email: email,
+                        force: force,
+                        human: human,
+                        wookie: wookie,
+                        hutt: hutt,
+                        comment: comment
+                    }
+                )
+                myNewContact.save().then(() => console.log('New contact saved'));
+                contactsaved = true;
+                res.render('contact', {
+                    contactsaved: contactsaved,
+                    posts: posts,
+                    name: name,
+                    email: email
+                });
+            }
+        });
     }
 )
-myApp.get('/contactthanks', function (req, res) {
-    res.render('contactthanks', { userLoggedIn: req.session.userLoggedIn });
+
+//Login Pages
+myApp.get('/loginsuccess', function (req, res) {
+    Post.find({}).exec(function (err, posts) {
+        res.render('loginsuccess', { posts: posts, userLoggedIn: req.session.userLoggedIn });
+    });
 });
 
-//Login Page
+
 myApp.get('/login', function (req, res) {
-    res.render('login', { userLoggedIn: req.session.userLoggedIn });
+    Post.find({}).exec(function (err, posts) {
+        res.render('login', { posts: posts, userLoggedIn: req.session.userLoggedIn });
+    });
 });
 
 myApp.post('/login', function (req, res) {
@@ -198,284 +232,116 @@ myApp.post('/login', function (req, res) {
     var user = req.body.username;
     var pass = req.body.password;
 
-    Users.findOne({ username: user, password: pass }).exec(function (err, users) {
-        // log any errors
-        console.log('Error: ' + err);
-        console.log('Username: ' + users);
-        if (users) {
-            //store username in session and set logged in true
-            req.session.username = users.username;
-            req.session.userLoggedIn = true;
+    Post.find({}).exec(function (err, posts) {
+        Users.findOne({ username: user, password: pass }).exec(function (err, users) {
+            // log any errors
+            console.log('Error: ' + err);
+            console.log('Username: ' + users);
+            if (users) {
+                //store username in session and set logged in true
+                req.session.username = users.username;
+                req.session.userLoggedIn = true;
+                console.log(req.session.username);
 
-            // redirect to the dashboard
-            res.redirect('/');
-        }
-        else {
-            res.render('login', { error: '"Log in, you can not" - Yoda' });
-        }
+                // store the username globally
+                myApp.locals.username = users.username;
+
+                res.redirect('loginsuccess')
+            }
+            else {
+                res.render('login', { posts: posts, error: '<blockquote>"Log in, you can not"</blockquote> - Yoda' });
+            }
+        });
     });
 });
 
 //Logout Page
 myApp.get('/logout', function (req, res) {
+
     //Remove variables from session
     req.session.username = '';
     req.session.userLoggedIn = false;
-    res.render('home', { userLoggedIn: req.session.userLoggedIn });
-
+    usernameHeader = req.session.username;
+    Post.find({}).exec(function (err, posts) {
+        res.render('home', { posts: posts, userLoggedIn: req.session.userLoggedIn });
+    });
 });
 // This avoids PAGE NOT FOUND if the user clicks on LOGIN button inmediatly after logout
 myApp.post('/logout', function (req, res) {
     res.redirect('/login');
 });
-
-
 //#endregion
 
-//#region Blog posts> add page, delete page
-myApp.get('/addpage', function (req, res) {
-    res.render('addpage', { userLoggedIn: req.session.userLoggedIn });
-});
+//#region Blog posts> add page, edit page
 
-function test(pageTitle, imageName, addPageEditor) {
-    console.log(pageTitle);
-    console.log(imageName);
-    console.log(addPageEditor);
-}
+// Add Page
+myApp.get('/addpage', function (req, res) {
+    Post.find({}).exec(function (err, posts) {
+        res.render('addpage', { posts: posts, userLoggedIn: req.session.userLoggedIn });
+    });
+});
 
 myApp.post('/addpage', function (req, res) {
     if (req.session.userLoggedIn) {
-        
+
         //Upload the picture: 
-        //https://www.youtube.com/watch?v=PXxd7WzhVn0
+        // https://www.youtube.com/watch?v=PXxd7WzhVn0
         // create an incoming form object
-        const form = formidable.IncomingForm();
-        form.parse(req);
-        form.on('fileBegin', function (name, file, fields) {
+
+        var form = formidable.IncomingForm();
+        form.parse(req, (err, fields, files) => {
+            if (err) {
+                next(err);
+                return;
+            }
+            console.log("Title: " + fields.pageTitle);
+            console.log("Image title: " + fields.pageImageTitle);
+            console.log("File: " + files.pageImage.name);
+            console.log("Comment: " + fields.pageEditor);
+
+            var pageTitle = fields.pageTitle;
+            var pageEditor = fields.pageEditor;
+            var pageImageTitle = fields.pageImageTitle;
+            var pageImage = files.pageImage.name;
+
+            //console.log(JSON.stringify(files))
+
+            var myNewPost = new Post(
+                {
+                    pageTitle: pageTitle,
+                    pageImageTitle: pageImageTitle,
+                    pageImage: pageImage,
+                    pageText: pageEditor
+                }
+            )
+            myNewPost.save().then(() => console.log('New page saved'));
+
+        });
+
+        form.on('fileBegin', function (name, file) {
             file.path = __dirname + '/public/uploads/' + file.name;
         });
 
-        form.on('file', function (fields, file) {
-            console.log('Uploaded ' + file.name);
-            return res.send(file.name);
-            test(fields.pageTitle, file.name, fields.addPageEditor);
-        });
-        console.log(file.name);
-        var pageTitle = req.body.pageTitle;
-        var addPageEditor = req.body.addPageEditor;
-
-        console.log("Page title: " + pageTitle);
-        console.log("Page CKEDitor: " + addPageEditor);
-
-        // var email = req.body.email;
-        // var comment = req.body.comment;
-        // var force = req.body.force;
-
-        // // Validate if the user selected any race
-        // if (req.body.human) {
-        //     var human = true;
-        // } else {
-        //     var human = false;
-        // }
-        // if (req.body.wookie) {
-        //     var wookie = true;
-        // } else {
-        //     var wookie = false;
-        // }
-        // if (req.body.hutt) {
-        //     var hutt = true;
-        // } else {
-        //     var hutt = false;
-        // }
-
-        // // Save the data in the mongoDB
-        // var myNewContact = new Contact(
-        //     {
-        //         name: name,
-        //         address: address,
-        //         phone: phone,
-        //         email: email,
-        //         force: force,
-        //         human: human,
-        //         wookie: wookie,
-        //         hutt: hutt,
-        //         comment: comment
-        //     }
-        // )
-        // myNewContact.save().then(() => console.log('New contact saved'));
-
-        // var orderid = req.params.orderid;
-        // console.log(orderid);
-        // Order.findOne({ _id: orderid }).exec(function (err, order) {
-        //     console.log('Error: ' + err);
-        //     console.log('Order: ' + order);
-        //     if (order) {
-        //         res.render('edit', { order: order, userLoggedIn: req.session.userLoggedIn });//Render edit with the order
-        //     }
-        //     else {
-        //         //This will be displayed if the user is trying to change the order id in the url
-        //         res.send('No order found with that id...');
-        //     }
-        // });
+        setTimeout(() => 1500);           // wait for the image to copy into upload
+        res.redirect('addpagesuccess');
     }
     else {
         res.redirect('/login');
     }
 });
 
-myApp.get('/editpage', function (req, res) {
-    res.render('editpage', { userLoggedIn: req.session.userLoggedIn });
+myApp.get('/addpagesuccess', function (req, res) {
+    Post.find({}).exec(function (err, posts) {
+        res.render('addpagesuccess', { posts: posts, userLoggedIn: req.session.userLoggedIn });
+    });
 });
 
-//#endregion
-
-//**************DELETEEEEEE  TEMP ********************************//
-myApp.get('/temp', function (req, res) {
-    res.render('temp', { userLoggedIn: req.session.userLoggedIn });
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//Edit page 
-//Use uniques mongodb id
-myApp.get('/edit/:orderid', function (req, res) {
+// List all pages (edit pages menu)
+myApp.get('/allpages', function (req, res) {
     // check if the user is logged in
     if (req.session.userLoggedIn) {
-        var orderid = req.params.orderid;
-        console.log(orderid);
-        Order.findOne({ _id: orderid }).exec(function (err, order) {
-            console.log('Error: ' + err);
-            console.log('Order: ' + order);
-            if (order) {
-                res.render('edit', { order: order, userLoggedIn: req.session.userLoggedIn });//Render edit with the order
-            }
-            else {
-                //This will be displayed if the user is trying to change the order id in the url
-                res.send('No order found with that id...');
-            }
-        });
-    }
-    else {
-        res.redirect('/login');
-    }
-});
-
-myApp.post('/edit/:id', [
-    check('name', 'Must have a name').not().isEmpty(),
-    check('email', 'Must have email').isEmail(),
-    check('phone').custom(CustomPhoneValidation)
-], function (req, res) {
-
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        //console.log(errors); // check what is the structure of errors
-        var orderid = req.params.id;
-        Order.findOne({ _id: orderid }).exec(function (err, order) {
-            console.log('Error: ' + err);
-            console.log('Order: ' + order);
-            if (order) {
-                res.render('edit', { order: order, errors: errors.array() });
-            }
-            else {
-                res.send('No order found with that id...');
-            }
-        });
-    }
-    else {
-        var name = req.body.name;
-        var email = req.body.email;
-        var phone = req.body.phone;
-        var address = req.body.address;
-        var city = req.body.city;
-        var provinceText = req.body.provinceText;
-        var colorprint = req.body.colorprint;
-        var grayscale = req.body.grayscale;
-        var scan = req.body.scan;
-
-        var tax = subTotal * 0.13;
-        var total = subTotal + tax;
-
-        var pageData = {
-            name: name,
-            email: email,
-            phone: phone,
-            address: address,
-            city: city,
-            provinceText: provinceText,
-            colorprint: colorprint,
-            grayscale: grayscale,
-            scan: scan,
-            subTotal: subTotal,
-            tax: tax,
-            total: total
-        }
-        var id = req.params.id;
-        Order.findOne({ _id: id }, function (err, order) {
-            order.name = name;
-            order.email = email;
-            order.phone = phone;
-            order.address = address;
-            order.lunch = lunch;
-            order.city = city;
-            order.provinceText = provinceText;
-            order.colorprint = item1;
-            order.grayscale = item2;
-            order.scan = item3;
-            order.subTotal = subTotal;
-            order.tax = tax;
-            order.total = total;
-            order.save();
-        });
-        res.render('editsuccess', pageData);
-    }
-});
-
-//Delete page
-//Use uniques mongodb id
-myApp.get('/delete/:orderid', function (req, res) {
-    // check if the user is logged in
-    if (req.session.userLoggedIn) {
-        //delete
-        var orderid = req.params.orderid;
-        console.log(orderid);
-        Order.findByIdAndDelete({ _id: orderid }).exec(function (err, order) {
-            console.log('Error: ' + err);
-            console.log('Order: ' + order);
-            if (order) {
-                res.render('delete', { message: 'Successfully deleted!', userLoggedIn: req.session.userLoggedIn });
-            }
-            else {
-                res.render('delete', { message: 'Sorry, could not delete!', userLoggedIn: req.session.userLoggedIn });
-            }
-        });
-    }
-    else {
-        res.redirect('/login');
-    }
-});
-
-//All orders page
-//fetch all. If there is an error it will put it in the err variable otherwise the orders
-//will be returned in the orders variable.
-// All orders page
-myApp.get('/allorders', function (req, res) {
-    // check if the user is logged in
-    if (req.session.userLoggedIn) {
-        console.log(req.session.userLoggedIn);
-        Order.find({}).exec(function (err, orders) {
-            res.render('allorders', { orders: orders, userLoggedIn: req.session.userLoggedIn });
+        Post.find({}).exec(function (err, posts) {
+            res.render('allpages', { posts: posts, userLoggedIn: req.session.userLoggedIn });
         });
     }
     else { // otherwise send the user to the login page
@@ -483,72 +349,179 @@ myApp.get('/allorders', function (req, res) {
     }
 });
 
-/********************************Tax finder *********************************/
-// https://www.retailcouncil.org/resources/quick-facts/sales-tax-rates-by-province/
-function TaxFinder(province) {
+//Edit page
+//Use uniques mongodb id
+myApp.get('/editpage/:id', function (req, res) {
+    // check if the user is logged in
 
-    var tax;
-    var provinceText;
+    if (req.session.userLoggedIn) {
+        var postsid = req.params.id;
+        console.log(postsid);
+        Post.findOne({ _id: postsid }).exec(function (err, posts) {
+            console.log('Error: ' + err);
+            console.log('Post: ' + posts);
+            console.log('Post ID: ' + postsid);
 
-    switch (province) {
-        case 1:
-            tax = 0.05;
-            provinceText = "Alberta";
-            break;
-        case 2:
-            tax = 0.12;
-            provinceText = "British Columbia";
-            break;
-        case 3:
-            tax = 0.12;
-            provinceText = "Manitoba";
-            break;
-        case 4:
-            tax = 0.15;
-            provinceText = "New Brunswick";
-            break;
-        case 5:
-            tax = 0.15;
-            provinceText = "Newfoundland and Labrador";
-            break;
-        case 6:
-            tax = 0.05;
-            provinceText = "Northwest Territories";
-            break;
-        case 7:
-            tax = 0.15;
-            provinceText = "Nova Scotia";
-            break;
-        case 8:
-            tax = 0.05;
-            provinceText = "Nunavut";
-            break;
-        case 9:
-            tax = 0.13;
-            provinceText = "Ontario";
-            break;
-        case 10:
-            tax = 0.15;
-            provinceText = "Prince Edward Island";
-            break;
-        case 11:
-            tax = 0.14975;
-            provinceText = "Quebec";
-            break;
-        case 12:
-            tax = 0.11;
-            provinceText = "Saskatchewan";
-            break;
-        case 13:
-            tax = 0.05;
-            provinceText = "Yukon";
-            break;
+            // save the postsid globally to be used in the EJS
+            myApp.locals.postsid = postsid;
+
+            if (posts) {
+                res.render('editpage', { posts: posts, userLoggedIn: req.session.userLoggedIn });//Render edit with the order
+            }
+            else {
+                //This will be displayed if the user is trying to change the order id in the url
+                res.send('Edit page: No page found with that id...');
+            }
+        });
+    }
+    else {
+        res.redirect('/login');
     }
 
-    return [tax, provinceText];
-}
+});
+
+myApp.post('/editpage/:id', function (req, res) {
+    if (req.session.userLoggedIn) {
+        var form = formidable.IncomingForm();
+        form.parse(req, (err, fields, files) => {
+            if (err) {
+                next(err);
+                return;
+            }
+            console.log("Title: " + fields.pageTitle);
+            console.log("Image title: " + fields.pageImageTitle);
+            console.log("File: " + files.pageImage.name);
+            console.log("Comment: " + fields.pageEditor);
+
+            var pageTitle = fields.pageTitle;
+            var pageText = fields.pageEditor;
+            var pageImage = files.pageImage.name;
+            var pageImageTitle = fields.pageImageTitle;
+            var postsid = req.params.id;
+
+            console.log("PostsID In edit: " + postsid);
+
+            //console.log(JSON.stringify(files))
+            Post.findOne({ _id: postsid }, function (err, posts) {
+
+                posts.pageTitle = pageTitle;
+                posts.pageImageTitle = pageImageTitle;
+                posts.pageImage = pageImage;
+                posts.pageText = pageText;
+                posts.save();
+            });
+
+        });
+
+        form.on('fileBegin', function (name, file) {
+            file.path = __dirname + '/public/uploads/' + file.name;
+        });
+
+        var postsid = req.params.id;
+        var editSuccessPage = '/pageTemplate/' + postsid;
+        console.log("PostsID In edit END: " + postsid);
+        console.log("Edit success page: " + editSuccessPage);
+
+        setTimeout(() => 1500);           // wait for the image to copy into upload
+        res.redirect(editSuccessPage);
+    } else {
+        res.redirect('/login');
+    }
+
+});
+
+myApp.get('/pageTemplate/:id', function (req, res) {
+    if (req.session.userLoggedIn) {
+        var postsid = req.params.id;
+        console.log('PostI in pageTemplate: ' + postsid);
+        Post.findOne({ _id: postsid }, function (err, postUnique) {
+            Post.find({}).exec(function (err, posts) {
+                var message = '<h2><a href="#">Page succesfully edited</a></h2>';
+                console.log(postUnique.pageTitle);
+                if (posts) {
+                    res.render('pageTemplate', {
+                        userLoggedIn: req.session.userLoggedIn,
+                        message: message,
+                        pageImage: postUnique.pageImage,
+                        pageTitle: postUnique.pageTitle,
+                        pageText: postUnique.pageText,
+                        pageImageTitle: postUnique.pageImageTitle,
+                        posts
+                    });
+                } else {
+                    res.send('pageTemplate: No page found with that id...');
+                }
+            });
+        });
+    } else {
+        res.redirect('/login');
+    }
+});
+
+//Delete page. Use uniques mongodb id
+myApp.get('/deletepage/:postsid', function (req, res) {
+    // check if the user is logged in
+    if (req.session.userLoggedIn) {
+        //delete
+        var postsid = req.params.postsid;
+        console.log(postsid);
+        Post.findByIdAndDelete({ _id: postsid }).exec(function (err, posts) {
+            console.log('Error: ' + err);
+            console.log('Page: ' + posts);
+            if (posts) {
+                res.render('deletepage', { message: 'Successfully deleted!', userLoggedIn: req.session.userLoggedIn, posts });
+            }
+            else {
+                res.render('deletepage', { message: 'Sorry, could not delete!', userLoggedIn: req.session.userLoggedIn, posts });
+            }
+        });
+    }
+    else {
+        res.redirect('/login');
+    }
+});
+//#endregion
+
+//#region Path for each page, 404 and listener
+myApp.get('/:path', function (req, res) {
+
+    var path = req.params.path;
+    Post.findOne({ pageTitle: path }).exec(function (err, postUnique) {
+        var message = '';
+        Post.find({}).exec(function (err, posts) {
+            if (postUnique) {
+                res.render('pageTemplate', {
+                    userLoggedIn: req.session.userLoggedIn,
+                    message: message,
+                    pageImageTitle: postUnique.pageImageTitle,
+                    pageTitle: postUnique.pageTitle,
+                    pageImage: postUnique.pageImage,
+                    pageText: postUnique.pageText,
+                    posts
+                });
+            } else {
+                res.render('404', { posts: posts, userLoggedIn: req.session.userLoggedIn });
+            }
+        });
+    });
+});
+
+// Page not found, error 404 
+myApp.use(function (req, res, next) {
+    Post.find({}).exec(function (err, posts) {
+        res.status(404);
+        res.render('404', { posts: posts, userLoggedIn: req.session.userLoggedIn });
+    });
+});
+
+// start the server and listen at a port
+myApp.listen(8080);
+console.log('R2D2: *** BLIP BLIP BLIP CHRIMP BLIP *** (Translation: Website at port 8080)');
+
+//#endregion
 
 /****************************Validation Functions****************************/
+//#region Validators
 // phone regex for 123-123-2341
 var phoneRegex = /^[0-9]{3}\-?[0-9]{3}\-?[0-9]{4}$/;
 
@@ -560,28 +533,6 @@ function CheckRegex(userInput, regex) {
     return false;
 }
 
-// Custom validation functions return true if conditions are satisfied or throws an error of type Error
-// Validate if the subtotal is greater than the minimum value
-function SubTotalValidation(value, { req }) {
-    var item1 = parseInt(req.body.item1);
-    var item2 = parseInt(req.body.item2);
-    var item3 = parseInt(req.body.item3);
-
-    var item1Value = 0.5;
-    var item2Value = 0.2;
-    var item3Value = 0.25;
-    var minimumSubtotalPrice = 10;
-
-    item1 *= item1Value.toFixed(2);
-    item2 *= item2Value.toFixed(2);
-    item3 *= item3Value.toFixed(2);
-
-    if ((item1 + item2 + item3) < minimumSubtotalPrice) {
-        throw new Error('Your total before taxes must be greater than $10');
-    }
-    return true;
-}
-
 // Custom phone validation
 function CustomPhoneValidation(value) {
     if (!CheckRegex(value, phoneRegex)) {
@@ -589,63 +540,4 @@ function CustomPhoneValidation(value) {
     }
     return true;
 }
-
-// Custom Province validator
-function CustomProvinceValidation(value) {
-    if (!parseInt(value)) {
-        throw new Error('Please select a Province');
-    }
-    return true;
-}
-// Custom item quantity validators. Must be a number greater than zero and the user must select at least 1 item
-function CustomItem1Validation(value, { req }) {
-    var item1 = req.body.item1;
-    var grayscale = req.body.grayscale;
-    var scan = req.body.scan;
-
-    if (value) {
-        if (!parseInt(item1)) {
-            throw new Error('Please correct item quantity: Color print');
-        }
-    } else if (!value && !grayscale && !scan) {
-        throw new Error('Please select at least 1 item');
-    }
-    return true;
-}
-function CustomItem2Validation(value, { req }) {
-    var item2 = req.body.item2;
-
-    if (value) {
-        if (!parseInt(item2)) {
-            throw new Error('Please correct item quantity: Grayscale print');
-        }
-    }
-    return true;
-}
-function CustomItem3Validation(value, { req }) {
-    var item3 = req.body.item3;
-
-    if (value) {
-        if (!parseInt(item3)) {
-            throw new Error('Please correct item quantity: Scan');
-        }
-    }
-    return true;
-}
-
-//#endregion
-
-
-
-//#region Last route (404) and listener
-// Page not found, error 404 handler
-myApp.use(function (req, res, next) {
-    res.status(404);
-    res.render('404', { userLoggedIn: req.session.userLoggedIn });
-});
-
-// start the server and listen at a port
-myApp.listen(8080);
-console.log('Everything executed fine.. website at port 8080....');
-
 //#endregion

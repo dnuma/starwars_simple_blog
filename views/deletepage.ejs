@@ -2,7 +2,7 @@
 <!--     Inspired by www.starwars.com       -->
 <!--     August 13, 2021                    -->
 
-<%- include('layouts/header'); -%>
+<%- include('layouts/header' , { posts: posts }); -%>
 
     <!-- Article 1 start -->
 
@@ -11,13 +11,13 @@
 
     <article id="article1">
         <!-- The new article tag. The id is supplied so it can be scrolled into view. -->
-        <h2><a href="#">About Me</a></h2>
+        <h2><a href="#">DELETE PAGE</a></h2>
 
         <div class="line"></div>
 
         <div class="articleBody clear">
             <section id="about">
-                delete page
+                <%= message %>
             </section>
         </div>
     </article>

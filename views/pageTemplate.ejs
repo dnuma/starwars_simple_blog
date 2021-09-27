@@ -1,0 +1,27 @@
+<!--     Student: David Numa, ID 8746372    -->
+<!--     Inspired by www.starwars.com       -->
+<!--     August 13, 2021                    -->
+
+
+<%- include('layouts/header' , { posts: posts }); -%>
+
+    <div class="line"></div>
+    <!-- Dividing line -->
+    <%- message %>
+        <article id="article1">
+            <h2><a style="color: #E3B202;" href="#">
+                    <%= pageTitle %>
+                </a></h2>
+            <div class="line"></div>
+            <div class="articleBody clear">
+                <!-- Page reciently edited starts here -->
+                <figure class="figure_home">
+                    <a href="/<%= pageImageTitle %>"><img src="/uploads/<%= pageImage %>" width=" 900"
+                            title="<%= pageImageTitle %>" alt="<%= pageImageTitle %>" /></a>
+                </figure>
+                <%- pageText %>
+            </div>
+        </article>
+
+        </section>
+        <%- include('layouts/footer'); -%>

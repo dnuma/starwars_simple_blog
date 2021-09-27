@@ -214,7 +214,7 @@ nav>ul::after {
 .about a:hover {
 	background-image: linear-gradient(to bottom,transparent 80%,green);
 }
-.account a:hover {
+li a:hover {
 	background-image: linear-gradient(to bottom,transparent 80%,purple);
 }
 .contact a:hover {
@@ -246,7 +246,6 @@ article{
 	margin:3em 0;
 	padding:20px;
 	font-size: medium;
-	text-shadow:0 2px 0 black;	
 }
 
 article a {
@@ -421,7 +420,7 @@ form textarea {
 /**********************************************************************************************/
 .page-form {
 		background-color:#2A2A2A;
-		margin:3em 0;
+		margin:1.5em 0;
 		padding:20px;
 		font-size: medium;
 		text-shadow:0 2px 0 black;
@@ -435,6 +434,44 @@ form textarea {
 
 #pageTitle {
 	width:80%;
+}
+
+
+/*
+	Table Styling
+*/
+
+table {
+	margin:1.5em 0;
+	border: 2px solid white;
+	border-collapse: collapse;
+	color: white;
+}
+
+td {
+	background-color: white;
+	border: 2px solid #2A2A2A;
+	padding: 12px 15px;
+	color: #2A2A2A;
+}
+
+th {
+	border: 2px solid white;
+	padding: 12px 15px;
+	font-weight: bold;
+	background-color: #2A2A2A;
+	color: #E3B202;
+	font-size: 16px;
+}
+
+.textTable{
+	width: 400px;
+}
+.textTitle {
+	width: 200px;
+}
+.textImage {
+	width: 100px;
 }
 
 /* Footer styling: 

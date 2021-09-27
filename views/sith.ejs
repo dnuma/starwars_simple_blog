@@ -2,50 +2,49 @@
 <!--     Inspired by www.starwars.com       -->
 <!--     August 13, 2021                    -->
 
-<%- include('layouts/header'); -%>
+<%- include('layouts/header' , { posts: posts }); -%>
 
-<!-- Article 2 start -->
-
-<div class="line"></div>
-
-<article id="article2">
-    <h2><a href="#">Sith</a></h2>
+    <!-- Article 2 start -->
 
     <div class="line"></div>
 
-    <div class="articleBody clear">
-        <aside id="sidebar1_3col">
-            <figure>
-                <img src="images/sithvertical_left.jpg" width="300" title="Darth Vader" alt="Sith" />
-            </figure>
-        </aside>
-        <section id="main_3col">
-            <blockquote>"The dark side of the Force is a pathway to many abilities some consider to
-                be...unnatural."</blockquote>
-            <p> ― Darth Sidious</p>
-            <br>
-            <p>The <strong>Sith</strong>, also referred to as the <strong>Sith Order</strong>, was an
-                ancient religious order of Force-wielders devoted to the dark side
-                of the Force. Driven by their emotions, including hate, anger, and greed, the Sith were
-                deceptive and obsessed with
-                gaining power no matter the cost. The order reached the apex of its power under Darth
-                Sidious, the Dark Lord of the Sith
-                who achieved his order's goal of galactic conquest after a millennium of plotting. Within a
-                generation, however, the
-                deaths of Sidious and Darth Vader would mark the end of the order of Sith Lords.</p>
-            <p>Thousands of years before the Clone Wars, the Jedi Order was fractured by a schism that began
-                when a rogue and his
-                followers turned away from the light side of the Force, believing the dark side was the path
-                to true power. Having
-                relocated to the planet Korriban in the Outer Rim Territories, their movement ultimately
-                evolved into the Sith Order.</p>
-        </section>
-        <aside id="sidebar2_3col">
-            <img src="images/sith_right.png" width="200" title="Galactic Empire Emblem"
-                alt="Sith Empire Logo" />
-        </aside>
-    </div>
-</article>
+    <article id="article2">
+        <h2><a href="#">Sith</a></h2>
 
-<!-- Article 2 end -->
-<%- include('layouts/footer'); -%>
+        <div class="line"></div>
+
+        <div class="articleBody clear">
+            <aside id="sidebar1_3col">
+                <figure>
+                    <img src="images/sithvertical_left.jpg" width="300" title="Darth Vader" alt="Sith" />
+                </figure>
+            </aside>
+            <section id="main_3col">
+                <blockquote>"The dark side of the Force is a pathway to many abilities some consider to
+                    be...unnatural."</blockquote>
+                <p> ― Darth Sidious</p>
+                <br>
+                <p>The <strong>Sith</strong>, also referred to as the <strong>Sith Order</strong>, was an
+                    ancient religious order of Force-wielders devoted to the dark side
+                    of the Force. Driven by their emotions, including hate, anger, and greed, the Sith were
+                    deceptive and obsessed with
+                    gaining power no matter the cost. The order reached the apex of its power under Darth
+                    Sidious, the Dark Lord of the Sith
+                    who achieved his order's goal of galactic conquest after a millennium of plotting. Within a
+                    generation, however, the
+                    deaths of Sidious and Darth Vader would mark the end of the order of Sith Lords.</p>
+                <p>Thousands of years before the Clone Wars, the Jedi Order was fractured by a schism that began
+                    when a rogue and his
+                    followers turned away from the light side of the Force, believing the dark side was the path
+                    to true power. Having
+                    relocated to the planet Korriban in the Outer Rim Territories, their movement ultimately
+                    evolved into the Sith Order.</p>
+            </section>
+            <aside id="sidebar2_3col">
+                <img src="images/sith_right.png" width="200" title="Galactic Empire Emblem" alt="Sith Empire Logo" />
+            </aside>
+        </div>
+    </article>
+
+    <!-- Article 2 end -->
+    <%- include('layouts/footer'); -%>
