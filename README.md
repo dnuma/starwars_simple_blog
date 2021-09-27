@@ -1,6 +1,6 @@
 # Star Wars simple blog
 
-This is my final project for Web Design, Node.JS. Technologies used in this project: Node.js, MongoDB, HTML, CSS, JavaScript.
+This is my final project for Web Design Node.JS (Conestoga College, 2021). Technologies used in this project: Node.js, MongoDB, HTML, CSS, JavaScript.
 
 All images and logos were taken from www.starwars.com, no credits were taken for that.
 
